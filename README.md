@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Latency Topology Visualizer
 
-## Getting Started
+Next.js 14 + TypeScript dashboard that renders a real-time 3D globe of major crypto exchange points-of-presence, their cloud co-location regions, and live/historical latency telemetry. The UI combines a react-globe.gl WebGL scene, interactive filtering, and Recharts-based historical analysis to understand how AWS, GCP, and Azure infrastructures impact trading latency.
 
-First, run the development server:
+### Live data strategy
+
+The `/api/latency` route pings public exchange REST endpoints (Binance, OKX, Bybit, Deribit, Coinbase, Kraken, Bitfinex, BitMEX) and measures the round-trip latency server-side. These live measurements flow into client components via SWR, get normalized into inter-exchange paths, and are cached in a Zustand store for historical charting.
+
+### Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Key features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 3D interactive world map with orbit controls, exchange markers, provider clusters, and animated latency arcs.
+- Real-time latency updates every 10 seconds with color-coded link health and legend.
+- Historical latency explorer with 1h/24h/7d/30d windows and per-path statistics.
+- Control panel for search, provider/exchange filters, latency range sliders, and layer toggles (real-time, historical, regions).
+- Cloud provider overview cards summarizing co-location capacity across AWS/GCP/Azure hotspots.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Tech stack
 
-## Learn More
+- Next.js App Router + TypeScript
+- Tailwind CSS for theming
+- `react-globe.gl` + `three` for 3D visualization
+- `zustand` for global state & history buffer
+- `swr` for polling live measurements
+- `recharts` for time-series rendering
+- `lucide-react` icons, `date-fns` utilities
 
-To learn more about Next.js, take a look at the following resources:
+### Production build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm start
+```
