@@ -29,7 +29,7 @@ export const StatsDashboard = () => {
       label: "Last refresh",
       value: formattedTime,
       icon: SignalHigh,
-      trend: "Updates every 10s",
+      trend: "Updates every 8s",
     },
   ];
 

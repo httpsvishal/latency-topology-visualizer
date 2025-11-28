@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { fetchLatencySnapshot } from "@/lib/latencyApi";
 import { useLatencyStore } from "@/store/latencyStore";
 
-const REFRESH_INTERVAL = 10_000;
+const REFRESH_INTERVAL = 8_000; // Update every 8 seconds for more responsive feel
 
 export const useLatencyFeed = () => {
   const updateSnapshot = useLatencyStore((state) => state.updateSnapshot);
